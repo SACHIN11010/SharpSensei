@@ -11,7 +11,7 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 const app = express();
-const PORT = 3000;
+const PORT = process.env.PORT || 3000;
 
 app.use(express.json());
 
@@ -330,7 +330,11 @@ Return valid JSON only.`;
         category: 'Concept'
       }
     ]
-  });
+});
+
+// API: Unmatched route fallback
+app.use('/api/*', (req, res) => {
+  res.status(404).json({ error: 'API endpoint not found' });
 });
 
 // Start Server & Vite Middleware

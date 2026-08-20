@@ -1,18 +1,77 @@
-<!doctype html>
-<html lang="en">
+<!DOCTYPE html>
+<html lang="en" class="h-full">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>SharpSensei // C# WinForms Lab IDE</title>
-    <meta name="description" content="SharpSensei: Master C# .NET GUI Programming with interactive WinForms simulations, Dry Run visualizer, step-by-step Visual Studio guide, and AI Tutor." />
-    <meta property="og:title" content="SharpSensei // C# WinForms Lab IDE" />
-    <meta property="og:description" content="SharpSensei: Master C# .NET GUI Programming with interactive WinForms simulations, Dry Run visualizer, step-by-step Visual Studio guide, and AI Tutor." />
+
+    <!-- Primary Meta Tags -->
+    <title>SharpSensei // BCA Sem 5 C# WinForms GUI Lab IDE</title>
+    <meta name="title" content="SharpSensei // BCA Sem 5 C# WinForms GUI Lab IDE" />
+    <meta
+      name="description"
+      content="Comprehensive C# .NET GUI lab simulator, interactive WinForms emulator, dry-run debugger, and AI tutor for BCA Semester 5 students."
+    />
+    <meta name="theme-color" content="#0f172a" />
+
+    <!-- Open Graph / Facebook / WhatsApp -->
     <meta property="og:type" content="website" />
-    <meta name="twitter:card" content="summary_large_image" />
+    <meta property="og:url" content="https://sharpsensei.local/" />
+    <meta property="og:title" content="SharpSensei // BCA Sem 5 C# WinForms GUI Lab IDE" />
+    <meta
+      property="og:description"
+      content="Comprehensive C# .NET GUI lab simulator, interactive WinForms emulator, dry-run debugger, and AI tutor for BCA Semester 5 students."
+    />
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image" />
+    <meta property="twitter:title" content="SharpSensei // BCA Sem 5 C# WinForms GUI Lab IDE" />
+    <meta
+      property="twitter:description"
+      content="Comprehensive C# .NET GUI lab simulator, interactive WinForms emulator, dry-run debugger, and AI tutor for BCA Semester 5 students."
+    />
+
+    <!-- Favicon -->
+    <link
+      rel="icon"
+      type="image/svg+xml"
+      href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>⚡</text></svg>"
+    />
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700;800;900&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- Tailwind CSS v4 Browser Engine -->
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+
+    <!-- Canvas Confetti -->
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.4/dist/confetti.browser.min.js"></script>
+
+    <!-- Custom CSS Overrides -->
+    <link rel="stylesheet" href="./css/styles.css" />
   </head>
-  <body>
-    <div id="root"></div>
-    <script type="module" src="/src/main.tsx"></script>
+  <body class="bg-[#0A0C10] text-slate-400 font-sans antialiased overflow-hidden h-screen w-screen">
+    <div id="app-root" class="h-full w-full">
+      <!-- Fallback Loading Skeleton while JS module loads -->
+      <div class="flex items-center justify-center h-full w-full bg-[#0A0C10] text-slate-300 font-mono text-xs">
+        <div class="flex flex-col items-center gap-3">
+          <div class="w-10 h-10 rounded bg-cyan-500 flex items-center justify-center text-black font-black text-sm animate-pulse">
+            C#
+          </div>
+          <div class="tracking-widest uppercase text-cyan-400 font-bold">Initializing SharpSensei IDE...</div>
+          <div class="text-[10px] text-slate-500">Loading 38 C# WinForms Lab Practicals & AI Engine</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Main ES6 JavaScript Entry Point -->
+    <script type="module" src="./js/main.js"></script>
   </body>
 </html>
-
