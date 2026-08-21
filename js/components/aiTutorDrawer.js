@@ -63,11 +63,10 @@ export function renderAiTutorDrawer(container) {
       <div id="ai-chat-messages" class="flex-1 p-3 overflow-y-auto space-y-3 font-sans text-xs">
         ${chatHistory.map(msg => `
           <div class="space-y-1 ${msg.sender === 'user' ? 'text-right' : 'text-left'}">
-            <div class="inline-block p-2.5 rounded-sm max-w-[88%] text-xs leading-relaxed ${
-              msg.sender === 'user'
-                ? `${themeConfig.accentBg} ${themeConfig.accentTextColor} font-medium`
-                : `${themeConfig.cardSubBg} border ${themeConfig.borderColor} ${themeConfig.textColor}`
-            }">
+            <div class="inline-block p-2.5 rounded-sm max-w-[88%] text-xs leading-relaxed ${msg.sender === 'user'
+      ? `${themeConfig.accentBg} ${themeConfig.accentTextColor} font-medium`
+      : `${themeConfig.cardSubBg} border ${themeConfig.borderColor} ${themeConfig.textColor}`
+    }">
               ${escapeMarkdown(msg.text)}
             </div>
             ${msg.modelUsed ? `<div class="text-[8px] text-slate-500 font-mono px-1">${msg.modelUsed}</div>` : ''}

@@ -10,88 +10,93 @@ export function renderSidebar(container) {
   const filtered = searchPracticals(searchQuery, selectedModule, selectedDifficulty);
 
   container.innerHTML = `
-    <aside class="w-72 md:w-80 h-full border-r ${themeConfig.borderColor} ${themeConfig.sidebarBg} flex flex-col shrink-0 overflow-hidden select-none">
-      <!-- Search & Filter Bar -->
-      <div class="p-3 border-b ${themeConfig.borderColor} space-y-2 shrink-0">
+    <aside class="w-[240px] md:w-[260px] border border-[#3e484f] rounded-xl shadow-lg bg-[#1E1E1E] flex flex-col shrink-0 h-full overflow-hidden relative select-none font-['Hanken_Grotesk',sans-serif]">
+      <!-- Header: C# Lab Series Card -->
+      <div class="px-4 py-2.5 border-b border-[#3e484f] flex justify-between items-center bg-[#2a2a2a]">
+        <div class="flex items-center gap-3">
+          <div class="w-8 h-8 rounded bg-[#353535] flex items-center justify-center border border-[#3e484f] text-[#e5e2e1] font-bold text-xs">
+            U
+          </div>
+          <div>
+            <div class="font-bold text-[#78d1ff] text-sm">C# Lab Series</div>
+            <div class="text-[10px] text-[#bdc8d0] uppercase tracking-wider font-['JetBrains_Mono',monospace]">38 Practicals</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Search & View Mode Controls -->
+      <div class="px-3 py-2 border-b border-[#3e484f] bg-[#1E1E1E] space-y-2 shrink-0">
         <div class="relative">
           <input
             type="text"
             id="sidebar-search-input"
-            placeholder="Search practicals, tags, topics..."
+            placeholder="Search practicals..."
             value="${searchQuery}"
-            class="w-full pl-7 pr-3 py-1.5 rounded-sm text-xs ${themeConfig.cardSubBg} border ${themeConfig.borderColor} ${themeConfig.textHeading} placeholder:text-slate-500 focus:outline-none focus:border-cyan-500"
+            class="w-full pl-7 pr-2 py-1 rounded text-xs bg-[#2a2a2a] border border-[#3e484f] text-[#e5e2e1] placeholder:text-[#bdc8d0]/60 focus:outline-none focus:border-cyan-500 font-['JetBrains_Mono',monospace]"
           />
-          <i data-lucide="search" class="w-3.5 h-3.5 absolute left-2 top-2.5 text-slate-500"></i>
+          <i data-lucide="search" class="w-3.5 h-3.5 absolute left-2 top-2 text-[#bdc8d0]"></i>
         </div>
 
-        <div class="flex gap-2 text-[10px]">
-          <select id="module-filter-select" class="flex-1 px-2 py-1 rounded-sm ${themeConfig.cardSubBg} border ${themeConfig.borderColor} ${themeConfig.textHeading} focus:outline-none">
-            <option value="All" ${selectedModule === 'All' ? 'selected' : ''}>All Modules (${allPracticals.length})</option>
-            ${modulesList.map(m => `
-              <option value="${m.name}" ${selectedModule === m.name ? 'selected' : ''}>${m.name.split(':')[0]} (${m.count})</option>
-            `).join('')}
-          </select>
-
-          <select id="diff-filter-select" class="w-24 px-2 py-1 rounded-sm ${themeConfig.cardSubBg} border ${themeConfig.borderColor} ${themeConfig.textHeading} focus:outline-none">
-            <option value="All" ${selectedDifficulty === 'All' ? 'selected' : ''}>Difficulty</option>
-            <option value="Beginner" ${selectedDifficulty === 'Beginner' ? 'selected' : ''}>Beginner</option>
-            <option value="Intermediate" ${selectedDifficulty === 'Intermediate' ? 'selected' : ''}>Intermediate</option>
-            <option value="Advanced" ${selectedDifficulty === 'Advanced' ? 'selected' : ''}>Advanced</option>
-          </select>
+        <!-- Section Navigation Views -->
+        <div class="space-y-0.5 pt-1 text-xs">
+          <a class="flex items-center gap-2.5 px-3 py-1.5 bg-[#702982] text-[#ec9bfb] border-l-2 border-[#78d1ff] rounded-r transition-all cursor-pointer font-bold" href="#">
+            <i data-lucide="folder-open" class="w-4 h-4"></i>
+            <span>Lab Explorer</span>
+          </a>
+          <a class="flex items-center gap-2.5 px-3 py-1.5 text-[#bdc8d0] hover:bg-[#2a2a2a] border-l-2 border-transparent rounded-r transition-all cursor-pointer" id="nav-view-code" href="#">
+            <i data-lucide="code" class="w-4 h-4"></i>
+            <span>Code Editor</span>
+          </a>
+          <a class="flex items-center gap-2.5 px-3 py-1.5 text-[#bdc8d0] hover:bg-[#2a2a2a] border-l-2 border-transparent rounded-r transition-all cursor-pointer" id="nav-view-viva" href="#">
+            <i data-lucide="list-checks" class="w-4 h-4"></i>
+            <span>Solution View</span>
+          </a>
         </div>
       </div>
 
-      <!-- Practicals Explorer Tree / List -->
-      <div class="flex-1 overflow-y-auto p-2 space-y-1">
+      <!-- Practicals Explorer Item List -->
+      <div class="flex-1 overflow-y-auto font-['JetBrains_Mono',monospace] text-xs py-1 divide-y divide-[#3e484f]/30">
         ${filtered.length === 0 ? `
-          <div class="p-6 text-center text-xs ${themeConfig.textMuted}">
+          <div class="p-6 text-center text-xs text-[#bdc8d0]">
             No practicals found matching "${searchQuery}".
           </div>
         ` : filtered.map(p => {
           const isActive = p.id === activePracticalId;
           const isDone = completedIds.includes(p.id);
-          const isStarred = starredIds.includes(p.id);
 
           return `
             <div
               data-practical-id="${p.id}"
-              class="group p-2 rounded-sm border cursor-pointer transition-all flex items-start justify-between gap-2 ${
+              class="flex items-center px-3 py-2 cursor-pointer transition-colors ${
                 isActive
-                  ? `${themeConfig.cardSubBg} ${themeConfig.accentBorder} shadow-sm`
-                  : `border-transparent hover:${themeConfig.cardSubBg} opacity-80 hover:opacity-100`
+                  ? 'bg-[#094771] border-l-2 border-[#00a3d9] text-[#e5e2e1]'
+                  : 'hover:bg-[#2D2D30] border-l-2 border-transparent text-[#bdc8d0] hover:text-[#e5e2e1]'
               }"
             >
-              <div class="flex items-start gap-2 min-w-0">
-                <span
-                  class="w-6 h-6 rounded-xs shrink-0 flex items-center justify-center font-bold text-[10px] ${
-                    isActive
-                      ? `${themeConfig.accentBg} ${themeConfig.accentTextColor}`
-                      : `${themeConfig.cardSubBg} ${themeConfig.textHeading} border ${themeConfig.borderColor}`
-                  }"
-                >
-                  #${p.id}
-                </span>
-
-                <div class="min-w-0 space-y-0.5">
-                  <div class="text-xs font-bold ${isActive ? themeConfig.textHeading : themeConfig.textColor} truncate">
-                    ${p.title}
-                  </div>
-                  <div class="flex items-center gap-1.5 text-[9px] ${themeConfig.textMuted}">
-                    <span>${p.difficulty}</span>
-                    <span>•</span>
-                    <span>${p.estimatedMinutes}m</span>
-                  </div>
-                </div>
-              </div>
-
-              <!-- Quick Status Badges -->
-              <div class="flex items-center gap-1 shrink-0">
-                ${isStarred ? `<i data-lucide="star" class="w-3 h-3 text-amber-400 fill-amber-400"></i>` : ''}
-                ${isDone ? `<i data-lucide="check-circle-2" class="w-3.5 h-3.5 text-emerald-400"></i>` : ''}
-              </div>
+              <i data-lucide="${isActive ? 'code-2' : 'file-code'}" class="w-3.5 h-3.5 mr-2 shrink-0 ${isActive ? 'text-[#78d1ff]' : 'text-[#87929a]'}"></i>
+              <span class="truncate flex-1 font-sans text-xs ${isActive ? 'font-bold text-white' : ''}">Practical ${p.id}: ${p.title}</span>
+              <div class="w-2 h-2 rounded-full ${isDone ? 'bg-[#00a3d9]' : 'bg-[#3e484f]'} ml-2 shrink-0" title="${isDone ? 'Completed' : 'Pending'}"></div>
             </div>
           `;
         }).join('')}
+      </div>
+
+      <!-- Footer Action Panel -->
+      <div class="p-3 border-t border-[#3e484f] bg-[#1b1b1c] shrink-0">
+        <button id="btn-resume-lab" class="w-full bg-[#00a3d9] text-black font-bold py-1.5 rounded hover:bg-[#008fbf] transition-colors mb-2 flex justify-center items-center gap-1.5 text-xs shadow-md">
+          <i data-lucide="play" class="w-3.5 h-3.5 fill-black"></i>
+          <span>Resume Lab</span>
+        </button>
+        <div class="flex justify-between items-center text-xs pt-1 px-1">
+          <button id="btn-sidebar-settings" class="flex items-center gap-1.5 text-[#bdc8d0] hover:text-white transition-colors">
+            <i data-lucide="settings" class="w-3.5 h-3.5"></i>
+            <span>Settings</span>
+          </button>
+          <button id="btn-sidebar-docs" class="flex items-center gap-1.5 text-[#bdc8d0] hover:text-white transition-colors">
+            <i data-lucide="book" class="w-3.5 h-3.5"></i>
+            <span>Docs</span>
+          </button>
+        </div>
       </div>
     </aside>
   `;

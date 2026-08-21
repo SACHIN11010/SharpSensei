@@ -1,9 +1,9 @@
 import { appState } from '../appState.js';
-import { vivaQuestionsList } from '../data/vivaData.js';
+import { generalVivaQuestions } from '../data/vivaData.js';
 
 export function renderVivaVoceSection(container, practical) {
   const { themeConfig } = appState;
-  const questions = practical?.vivaQuestions || vivaQuestionsList.slice(0, 4);
+  const questions = practical?.vivaQuestions || generalVivaQuestions.slice(0, 4);
 
   container.innerHTML = `
     <div class="space-y-4 select-none">

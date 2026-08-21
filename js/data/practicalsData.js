@@ -46,7 +46,7 @@ export function getPracticalById(id) {
 export function searchPracticals(query, moduleFilter, diffFilter) {
   const q = (query || '').trim().toLowerCase();
   return allPracticals.filter(p => {
-    const matchesQuery = 
+    const matchesQuery =
       !q ||
       p.id.toString() === q ||
       p.title.toLowerCase().includes(q) ||

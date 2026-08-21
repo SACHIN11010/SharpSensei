@@ -10,7 +10,7 @@ export async function askAiTutor(questionText, practical, userApiKey) {
   if (userApiKey && userApiKey.trim().length > 0) {
     try {
       const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${encodeURIComponent(userApiKey.trim())}`;
-      
+
       const systemInstruction = `You are SharpSensei, an expert Professor of Computer Applications specializing in C# .NET, Windows Forms GUI Programming, ADO.NET, and .NET Framework for BCA Semester 5 students. Provide clear, educational, friendly, and practical answers with Markdown code blocks.`;
 
       const prompt = `Context:

@@ -8,47 +8,33 @@ export function renderNavbar(container) {
   const progressPercent = Math.round((completedCount / totalCount) * 100);
 
   container.innerHTML = `
-    <header class="h-13 border-b ${themeConfig.borderColor} ${themeConfig.headerBg} flex items-center justify-between px-3 md:px-4 select-none shrink-0 z-20">
+    <header class="bg-[#131313] text-[#78d1ff] font-['Hanken_Grotesk',sans-serif] fixed top-0 w-full z-50 h-12 border-b border-[#3e484f] transition-colors duration-150 flex justify-between items-center px-4 shrink-0 select-none">
       <!-- Left: Brand Logo & Title -->
-      <div class="flex items-center gap-3 min-w-0">
-        <div class="flex items-center gap-2 cursor-pointer" id="btn-brand-home">
-          <div class="w-8 h-8 rounded-sm ${themeConfig.accentBg} flex items-center justify-center text-black font-black text-xs shadow-md">
+      <div class="flex items-center gap-3">
+        <div class="flex items-center gap-3 cursor-pointer" id="btn-brand-home">
+          <div class="w-8 h-8 rounded bg-gradient-to-br from-cyan-500 to-emerald-400 flex items-center justify-center text-black font-black text-xs shadow-md">
             C#
           </div>
-          <div class="flex flex-col min-w-0">
-            <div class="flex items-center gap-1.5">
-              <span class="font-black tracking-wider text-xs md:text-sm ${themeConfig.textHeading} uppercase">SharpSensei</span>
-              <span class="text-[9px] px-1 py-0.2 rounded-xs border font-bold ${themeConfig.accentBadgeBg} hidden sm:inline">IDE v2.5</span>
-            </div>
-            <span class="text-[10px] ${themeConfig.textMuted} tracking-tight hidden md:inline truncate">BCA Sem-5 WinForms GUI Lab & AI Tutor</span>
-          </div>
+          <span class="font-['Hanken_Grotesk',sans-serif] text-lg font-bold text-[#78d1ff]">SharpSensei</span>
         </div>
 
-        <!-- Progress Indicator Badge -->
-        <div class="hidden lg:flex items-center gap-2 ml-4 pl-4 border-l ${themeConfig.borderColor}">
-          <div class="flex flex-col">
-            <div class="flex items-center justify-between text-[9px] ${themeConfig.textMuted} font-bold">
-              <span>PROGRESS</span>
-              <span>${completedCount}/${totalCount} (${progressPercent}%)</span>
-            </div>
-            <div class="w-28 h-1.5 bg-slate-800 rounded-full overflow-hidden mt-0.5 border border-slate-700/50">
-              <div class="h-full rounded-full transition-all duration-300" style="width: ${progressPercent}%; background-color: ${themeConfig.previewColor};"></div>
-            </div>
-          </div>
+        <!-- 38 Practicals Loaded Badge -->
+        <div class="hidden md:flex items-center bg-[#2a2a2a] rounded px-3 py-1 border border-[#3e484f] ml-2">
+          <span class="font-['JetBrains_Mono',monospace] text-xs text-[#bdc8d0]">${completedCount}/38 Practicals Loaded</span>
         </div>
       </div>
 
-      <!-- Right: Action Buttons & Settings -->
-      <div class="flex items-center gap-1.5 md:gap-2">
+      <!-- Right: Controls & Action Icons -->
+      <div class="flex items-center gap-2">
         <!-- Layout Selector Dropdown -->
         <div class="relative inline-block text-left">
-          <button id="btn-layout-dropdown" class="flex items-center gap-1 px-2 py-1 rounded-sm text-[10px] font-bold border ${themeConfig.borderColor} ${themeConfig.cardSubBg} ${themeConfig.textHeading} hover:border-slate-500 transition-colors">
+          <button id="btn-layout-dropdown" class="flex items-center gap-1 px-2.5 py-1 rounded text-xs font-bold border border-[#3e484f] bg-[#2a2a2a] text-[#e5e2e1] hover:border-cyan-500 transition-colors">
             <i data-lucide="layout" class="w-3.5 h-3.5"></i>
             <span class="hidden sm:inline uppercase">${currentLayout}</span>
           </button>
-          <div id="layout-menu" class="hidden absolute right-0 mt-1 w-56 rounded-sm shadow-xl ${themeConfig.headerBg} border ${themeConfig.borderColor} py-1 z-50">
+          <div id="layout-menu" class="hidden absolute right-0 mt-1 w-56 rounded shadow-xl bg-[#131313] border border-[#3e484f] py-1 z-50">
             ${layoutOptions.map(opt => `
-              <button data-layout-id="${opt.id}" class="w-full text-left px-3 py-1.5 text-xs hover:bg-white/10 flex items-center justify-between ${currentLayout === opt.id ? 'font-bold text-cyan-400' : themeConfig.textColor}">
+              <button data-layout-id="${opt.id}" class="w-full text-left px-3 py-1.5 text-xs hover:bg-white/10 flex items-center justify-between ${currentLayout === opt.id ? 'font-bold text-cyan-400' : 'text-[#e5e2e1]'}">
                 <span>${opt.name}</span>
                 <span class="text-[9px] opacity-60">${opt.badge}</span>
               </button>
@@ -56,34 +42,34 @@ export function renderNavbar(container) {
           </div>
         </div>
 
-        <!-- Theme Selector Button -->
-        <button id="btn-open-theme" class="flex items-center gap-1.5 px-2 py-1 rounded-sm text-[10px] font-bold border ${themeConfig.borderColor} ${themeConfig.cardSubBg} ${themeConfig.textHeading} hover:border-slate-500 transition-colors" title="Theme Selector">
-          <span class="w-3 h-3 rounded-full border border-white/20" style="background-color: ${themeConfig.previewColor}"></span>
-          <span class="hidden md:inline">THEME</span>
+        <!-- Theme Button (Settings) -->
+        <button id="btn-open-theme" aria-label="Settings" class="text-[#bdc8d0] hover:bg-[#2a2a2a] p-1.5 rounded transition-colors duration-150 flex items-center gap-1" title="Theme Settings">
+          <i data-lucide="settings" class="w-4 h-4"></i>
+          <span class="hidden lg:inline text-xs font-bold">SETTINGS</span>
         </button>
 
-        <!-- Quiz Modal Button -->
-        <button id="btn-open-quiz" class="flex items-center gap-1 px-2 py-1 rounded-sm text-[10px] font-bold border ${themeConfig.borderColor} ${themeConfig.cardSubBg} ${themeConfig.textHeading} hover:border-slate-500 transition-colors" title="BCA Exam Practice Quiz">
-          <i data-lucide="help-circle" class="w-3.5 h-3.5"></i>
-          <span class="hidden sm:inline">QUIZ</span>
+        <!-- Quiz Button (Help) -->
+        <button id="btn-open-quiz" aria-label="Help" class="text-[#bdc8d0] hover:bg-[#2a2a2a] p-1.5 rounded transition-colors duration-150 flex items-center gap-1" title="BCA Exam Practice Quiz">
+          <i data-lucide="help-circle" class="w-4 h-4"></i>
+          <span class="hidden lg:inline text-xs font-bold">QUIZ</span>
         </button>
 
         <!-- Cheatsheet Button -->
-        <button id="btn-open-cheatsheet" class="flex items-center gap-1 px-2 py-1 rounded-sm text-[10px] font-bold border ${themeConfig.borderColor} ${themeConfig.cardSubBg} ${themeConfig.textHeading} hover:border-slate-500 transition-colors" title="WinForms & ADO.NET Cheatsheet">
+        <button id="btn-open-cheatsheet" class="hidden sm:flex items-center gap-1 px-2 py-1 rounded text-xs font-bold border border-[#3e484f] bg-[#2a2a2a] text-[#e5e2e1] hover:border-slate-500 transition-colors" title="WinForms & ADO.NET Cheatsheet">
           <i data-lucide="file-text" class="w-3.5 h-3.5"></i>
-          <span class="hidden sm:inline">CHEATSHEET</span>
+          <span class="hidden md:inline">DOCS</span>
         </button>
 
         <!-- Lab Record Modal -->
-        <button id="btn-open-labrecord" class="flex items-center gap-1 px-2 py-1 rounded-sm text-[10px] font-bold border ${themeConfig.borderColor} ${themeConfig.cardSubBg} ${themeConfig.textHeading} hover:border-slate-500 transition-colors" title="Printable Lab Record Manual">
+        <button id="btn-open-labrecord" class="hidden sm:flex items-center gap-1 px-2 py-1 rounded text-xs font-bold border border-[#3e484f] bg-[#2a2a2a] text-[#e5e2e1] hover:border-slate-500 transition-colors" title="Printable Lab Record Manual">
           <i data-lucide="book-open" class="w-3.5 h-3.5"></i>
-          <span class="hidden sm:inline">LAB RECORD</span>
+          <span class="hidden md:inline">RECORD</span>
         </button>
 
         <!-- AI Tutor Toggle Button -->
-        <button id="btn-toggle-aitutor" class="flex items-center gap-1.5 px-2.5 py-1 rounded-sm text-[10px] font-black uppercase transition-all shadow-md ${isAiTutorOpen ? 'bg-cyan-400 text-black' : `${themeConfig.accentBg} ${themeConfig.accentTextColor} hover:opacity-90`}">
-          <i data-lucide="bot" class="w-3.5 h-3.5"></i>
-          <span>AI TUTOR</span>
+        <button id="btn-toggle-aitutor" class="flex items-center gap-1.5 px-3 py-1 rounded text-xs font-bold uppercase transition-all shadow-md ${isAiTutorOpen ? 'bg-cyan-400 text-black' : 'bg-[#00a3d9] text-black hover:bg-[#008fbf]'}" title="AI Tutor Engine">
+          <i data-lucide="bot" class="w-4 h-4"></i>
+          <span class="hidden sm:inline">AI TUTOR</span>
         </button>
       </div>
     </header>

@@ -35,10 +35,10 @@ export function renderSyllabusBoard(container) {
       <!-- Modules Matrix -->
       <div class="space-y-6">
         ${modulesList.map(mod => {
-          const modPracticals = allPracticals.filter(p => p.module === mod.name);
-          const doneInMod = modPracticals.filter(p => completedIds.includes(p.id)).length;
+    const modPracticals = allPracticals.filter(p => p.module === mod.name);
+    const doneInMod = modPracticals.filter(p => completedIds.includes(p.id)).length;
 
-          return `
+    return `
             <div class="border ${themeConfig.borderColor} ${themeConfig.cardSubBg} rounded-sm overflow-hidden shadow-md">
               <div class="p-3 border-b ${themeConfig.borderColor} flex items-center justify-between" style="border-left: 4px solid ${mod.color}">
                 <div>
@@ -52,10 +52,10 @@ export function renderSyllabusBoard(container) {
 
               <div class="p-3 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3">
                 ${modPracticals.map(p => {
-                  const isDone = completedIds.includes(p.id);
-                  const isStarred = starredIds.includes(p.id);
+      const isDone = completedIds.includes(p.id);
+      const isStarred = starredIds.includes(p.id);
 
-                  return `
+      return `
                     <div
                       data-launch-practical-id="${p.id}"
                       class="border ${themeConfig.borderColor} ${themeConfig.cardBg} p-3 rounded-sm hover:border-cyan-500 transition-all cursor-pointer space-y-2 flex flex-col justify-between group"
@@ -79,11 +79,11 @@ export function renderSyllabusBoard(container) {
                       </div>
                     </div>
                   `;
-                }).join('')}
+    }).join('')}
               </div>
             </div>
           `;
-        }).join('')}
+  }).join('')}
       </div>
     </div>
   `;

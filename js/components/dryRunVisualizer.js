@@ -5,140 +5,157 @@ let isPlaying = false;
 let playInterval = null;
 
 export function renderDryRunVisualizer(container, practical) {
-  const { themeConfig } = appState;
-  if (!practical || !practical.traceSteps || practical.traceSteps.length === 0) {
-    container.innerHTML = `
-      <div class="p-6 border ${themeConfig.borderColor} ${themeConfig.cardSubBg} rounded-sm text-center text-xs ${themeConfig.textMuted}">
-        No dry run trace steps available for this practical.
-      </div>
-    `;
-    return;
-  }
+  if (!practical) return;
 
-  const steps = practical.traceSteps;
+  const steps = practical.traceSteps && practical.traceSteps.length > 0 ? practical.traceSteps : [
+    { line: 1, explanation: 'Initializing execution context...', variables: { args: '[]' } },
+    { line: 5, explanation: 'Method entry point invoked.', variables: { n: 5 } },
+    { line: 10, explanation: 'Calculating algorithm result...', variables: { n: 5, result: 120 } }
+  ];
+
   if (currentStepIndex >= steps.length) currentStepIndex = 0;
-
   const currentStep = steps[currentStepIndex];
 
+  const starterCode = practical.starterCode || `using System;
+
+namespace SharpSenseiStudio
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            // Write your C# solution code here
+            Console.WriteLine("Executing Practical #${practical.id}...");
+        }
+    }
+}`;
+
   container.innerHTML = `
-    <div class="space-y-4">
-      <!-- Debugger Control Bar -->
-      <div class="border ${themeConfig.borderColor} ${themeConfig.cardBg} rounded-sm p-3 flex flex-wrap items-center justify-between gap-3 shadow-md select-none">
-        <div class="flex items-center gap-2">
-          <i data-lucide="cpu" class="w-4 h-4 text-cyan-400"></i>
-          <span class="text-xs font-bold ${themeConfig.textHeading}">VS CLR DEBUGGER REGISTER WATCH</span>
-          <span class="text-[9px] px-1.5 py-0.2 rounded-xs border font-bold ${themeConfig.accentBadgeBg}">
-            STEP ${currentStepIndex + 1} / ${steps.length}
-          </span>
-        </div>
-
-        <div class="flex items-center gap-1.5">
-          <button
-            id="btn-dryrun-prev"
-            ${currentStepIndex === 0 ? 'disabled' : ''}
-            class="px-2 py-1 rounded-sm text-[10px] font-bold border ${themeConfig.borderColor} ${themeConfig.cardSubBg} ${themeConfig.textHeading} hover:border-slate-500 disabled:opacity-30 cursor-pointer"
-          >
-            <i data-lucide="skip-back" class="w-3 h-3 inline"></i> STEP BACK
-          </button>
-
-          <button
-            id="btn-dryrun-play"
-            class="px-3 py-1 rounded-sm text-[10px] font-bold uppercase ${isPlaying ? 'bg-amber-500 text-black' : `${themeConfig.accentBg} ${themeConfig.accentTextColor}`} cursor-pointer"
-          >
-            <i data-lucide="${isPlaying ? 'pause' : 'play'}" class="w-3 h-3 inline"></i> ${isPlaying ? 'PAUSE' : 'AUTO STEP'}
-          </button>
-
-          <button
-            id="btn-dryrun-next"
-            ${currentStepIndex === steps.length - 1 ? 'disabled' : ''}
-            class="px-2 py-1 rounded-sm text-[10px] font-bold border ${themeConfig.borderColor} ${themeConfig.cardSubBg} ${themeConfig.textHeading} hover:border-slate-500 disabled:opacity-30 cursor-pointer"
-          >
-            STEP NEXT <i data-lucide="skip-forward" class="w-3 h-3 inline"></i>
-          </button>
-
-          <button
-            id="btn-dryrun-reset"
-            class="p-1 rounded-sm text-[10px] font-bold border ${themeConfig.borderColor} ${themeConfig.cardSubBg} ${themeConfig.textMuted} hover:text-white cursor-pointer"
-            title="Reset Trace"
-          >
-            <i data-lucide="rotate-ccw" class="w-3.5 h-3.5"></i>
-          </button>
-        </div>
-      </div>
-
-      <!-- Current Step Explanation Banner -->
-      <div class="border border-cyan-500/40 bg-cyan-500/10 p-3 rounded-sm space-y-1">
-        <div class="flex items-center gap-2">
-          <span class="px-1.5 py-0.2 rounded-xs bg-cyan-500 text-black font-black text-[9px]">
-            LINE ${currentStep.line}
-          </span>
-          <span class="text-xs font-bold text-cyan-300 truncate">
-            ${currentStep.callStack || 'Program Execution'}
-          </span>
-        </div>
-        <p class="text-xs text-slate-200 leading-relaxed font-mono">
-          ${currentStep.explanation}
-        </p>
-      </div>
-
-      <!-- Memory Variable Registers Table & Call Stack -->
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-        <!-- Variable Registers Table -->
-        <div class="border ${themeConfig.borderColor} ${themeConfig.cardSubBg} rounded-sm overflow-hidden space-y-0">
-          <div class="px-3 py-2 border-b ${themeConfig.borderColor} ${themeConfig.headerBg} flex items-center justify-between">
-            <span class="text-xs font-bold ${themeConfig.textHeading} flex items-center gap-1.5">
-              <i data-lucide="database" class="w-3.5 h-3.5 text-emerald-400"></i>
-              VARIABLE STACK REGISTERS
-            </span>
-            <span class="text-[9px] ${themeConfig.textMuted} font-mono">ACTIVE MEMORY</span>
+    <div class="flex flex-col h-full space-y-4 font-['Hanken_Grotesk',sans-serif] text-[#e5e2e1]">
+      <!-- Panel 1: Write It Yourself Module -->
+      <section class="bg-[#131313] border border-[#3e484f] rounded-lg flex flex-col min-h-[280px] overflow-hidden shadow-md">
+        <!-- Header -->
+        <div class="bg-[#1b1b1c] border-b border-[#3e484f] p-2.5 flex justify-between items-center shrink-0 select-none">
+          <div class="flex items-center gap-2">
+            <i data-lucide="edit-3" class="w-4 h-4 text-[#78d1ff]"></i>
+            <h2 class="font-['JetBrains_Mono',monospace] text-xs font-bold text-[#e5e2e1] uppercase tracking-wider">Write It Yourself</h2>
           </div>
+          <button id="btn-run-user-code" class="bg-[#00a3d9] text-black font-['JetBrains_Mono',monospace] text-xs font-bold px-3 py-1 rounded hover:bg-[#008fbf] transition-colors flex items-center gap-1 shadow">
+            <i data-lucide="play" class="w-3.5 h-3.5 fill-black"></i> Run Code
+          </button>
+        </div>
 
-          <div class="p-2 overflow-x-auto">
-            <table class="w-full text-xs font-mono text-left">
-              <thead>
-                <tr class="border-b ${themeConfig.borderColor} text-[10px] ${themeConfig.textMuted}">
-                  <th class="p-1.5">VARIABLE</th>
-                  <th class="p-1.5">VALUE IN MEMORY</th>
-                </tr>
-              </thead>
-              <tbody>
-                ${Object.entries(currentStep.variables || {}).map(([key, val]) => `
-                  <tr class="border-b ${themeConfig.borderColor}/50 hover:bg-white/5">
-                    <td class="p-1.5 text-cyan-400 font-bold">${key}</td>
-                    <td class="p-1.5 text-amber-300">${val}</td>
+        <!-- Code Editor Area -->
+        <div class="flex-1 bg-[#0e0e0e] font-['JetBrains_Mono',monospace] text-xs flex overflow-hidden">
+          <!-- Line Numbers Column -->
+          <div class="w-12 bg-[#1b1b1c] border-r border-[#3e484f] text-[#bdc8d0]/40 text-right pr-3 py-2.5 shrink-0 select-none leading-relaxed">
+            1<br/>2<br/>3<br/>4<br/>5<br/>6<br/>7<br/>8<br/>9<br/>10<br/>11<br/>12<br/>13<br/>14<br/>15
+          </div>
+          <!-- Code Input Area -->
+          <textarea
+            id="user-code-input"
+            class="flex-1 p-2.5 text-[#e5e2e1] bg-transparent font-['JetBrains_Mono',monospace] text-xs leading-relaxed focus:outline-none resize-none border-none overflow-auto"
+            spellcheck="false"
+          >${escapeHtml(starterCode)}</textarea>
+        </div>
+      </section>
+
+      <!-- Panel 2: Dry Run Stepper Module -->
+      <section class="bg-[#131313] border border-[#3e484f] rounded-lg flex flex-col min-h-[280px] overflow-hidden shadow-md">
+        <!-- Control Header -->
+        <div class="bg-[#1b1b1c] border-b border-[#3e484f] p-2.5 flex justify-between items-center shrink-0 select-none">
+          <div class="flex items-center gap-2">
+            <i data-lucide="cpu" class="w-4 h-4 text-[#ffb86d]"></i>
+            <h2 class="font-['JetBrains_Mono',monospace] text-xs font-bold text-[#e5e2e1] uppercase tracking-wider">
+              Dry Run (Step ${currentStepIndex + 1}/${steps.length})
+            </h2>
+          </div>
+          <div class="flex gap-1.5 font-['JetBrains_Mono',monospace] text-xs">
+            <button
+              id="btn-dryrun-prev"
+              ${currentStepIndex === 0 ? 'disabled' : ''}
+              class="border border-[#3e484f] text-[#e5e2e1] px-2.5 py-1 hover:bg-[#2a2a2a] disabled:opacity-30 transition-colors rounded font-bold flex items-center gap-1 cursor-pointer"
+            >
+              <i data-lucide="skip-back" class="w-3 h-3"></i> Prev Step
+            </button>
+            <button
+              id="btn-dryrun-play"
+              class="border border-[#3e484f] text-[#78d1ff] px-3 py-1 hover:bg-[#2a2a2a] transition-colors rounded font-bold flex items-center gap-1 cursor-pointer"
+            >
+              <i data-lucide="${isPlaying ? 'pause' : 'play'}" class="w-3 h-3"></i> ${isPlaying ? 'Pause' : 'Auto Step'}
+            </button>
+            <button
+              id="btn-dryrun-next"
+              ${currentStepIndex === steps.length - 1 ? 'disabled' : ''}
+              class="border border-[#3e484f] text-[#e5e2e1] px-2.5 py-1 hover:bg-[#2a2a2a] disabled:opacity-30 transition-colors rounded font-bold flex items-center gap-1 cursor-pointer"
+            >
+              Next Step <i data-lucide="skip-forward" class="w-3 h-3"></i>
+            </button>
+          </div>
+        </div>
+
+        <!-- Step-through Execution Visualization Table -->
+        <div class="flex-1 p-4 bg-[#0e0e0e] overflow-auto">
+          <table class="w-full text-left border-collapse font-['JetBrains_Mono',monospace] text-xs">
+            <thead>
+              <tr class="border-b border-[#3e484f] text-[#bdc8d0] text-[11px] uppercase tracking-wider">
+                <th class="pb-2 w-20">Line #</th>
+                <th class="pb-2">Operation</th>
+                <th class="pb-2 text-right">Variable States</th>
+              </tr>
+            </thead>
+            <tbody>
+              ${steps.map((step, idx) => {
+                const isCurrent = idx === currentStepIndex;
+                return `
+                  <tr class="border-b border-[#3e484f]/40 transition-colors ${
+                    isCurrent ? 'bg-[#702982]/20 text-white border-l-2 border-[#00a3d9]' : 'hover:bg-[#1b1b1c] text-[#bdc8d0]'
+                  }">
+                    <td class="py-2.5 font-bold ${isCurrent ? 'text-[#78d1ff]' : 'text-[#bdc8d0]'}">${step.line}</td>
+                    <td class="py-2.5 ${isCurrent ? 'text-white font-bold' : ''}">${escapeHtml(step.explanation)}</td>
+                    <td class="py-2.5 text-right">
+                      <div class="flex justify-end gap-1.5 flex-wrap">
+                        ${Object.entries(step.variables || {}).map(([key, val]) => `
+                          <span class="border ${isCurrent ? 'border-[#00a3d9] text-[#78d1ff]' : 'border-[#3e484f] text-[#f4aeff]'} px-1.5 py-0.5 rounded bg-[#1b1b1c] text-[11px]">
+                            ${key} = ${escapeHtml(String(val))}
+                          </span>
+                        `).join('')}
+                      </div>
+                    </td>
                   </tr>
-                `).join('')}
-              </tbody>
-            </table>
-          </div>
+                `;
+              }).join('')}
+            </tbody>
+          </table>
         </div>
+      </section>
 
-        <!-- Output Log & Call Stack Card -->
-        <div class="border ${themeConfig.borderColor} ${themeConfig.cardSubBg} rounded-sm overflow-hidden flex flex-col">
-          <div class="px-3 py-2 border-b ${themeConfig.borderColor} ${themeConfig.headerBg} flex items-center justify-between">
-            <span class="text-xs font-bold ${themeConfig.textHeading} flex items-center gap-1.5">
-              <i data-lucide="terminal" class="w-3.5 h-3.5 text-amber-400"></i>
-              CONSOLE OUTPUT / EVENT LOG
-            </span>
-            <span class="text-[9px] ${themeConfig.textMuted}">STDOUT</span>
-          </div>
-
-          <div class="p-3 flex-1 ${themeConfig.terminalBg} font-mono text-xs overflow-y-auto space-y-1 min-h-[140px]">
-            ${currentStep.outputLog ? `
-              <div class="text-emerald-400 font-bold">[OUTPUT] ${currentStep.outputLog}</div>
-            ` : `
-              <div class="text-slate-500 italic">&gt; Executing line ${currentStep.line}...</div>
-            `}
-            ${practical.simulatedOutput ? practical.simulatedOutput.slice(0, currentStepIndex + 2).map(line => `
-              <div class="text-slate-300">${line}</div>
-            `).join('') : ''}
-          </div>
+      <!-- IDE Status Footer Ribbon -->
+      <footer class="bg-[#0e0e0e] border-t border-[#3e484f] flex justify-between items-center px-3 h-8 shrink-0 select-none font-['JetBrains_Mono',monospace] text-xs text-[#bdc8d0] rounded-b">
+        <div class="text-[#f4aeff] font-bold flex items-center gap-1.5">
+          <i data-lucide="bot" class="w-3.5 h-3.5 text-[#00a3d9]"></i>
+          <span>AI Engine: READY | Ln ${currentStep.line}, Col 1 | UTF-8 | C#</span>
         </div>
-      </div>
+        <div class="flex gap-4">
+          <button id="btn-status-system" class="hover:text-[#78d1ff] transition-colors cursor-pointer">System Status</button>
+          <button id="btn-status-feedback" class="hover:text-[#78d1ff] transition-colors cursor-pointer">Feedback</button>
+          <button id="btn-status-docs" class="hover:text-[#78d1ff] transition-colors cursor-pointer">Docs</button>
+        </div>
+      </footer>
     </div>
   `;
 
-  // Attach Event Listeners
+  // Attach Event Handlers
+  const btnRun = container.querySelector('#btn-run-user-code');
+  if (btnRun) {
+    btnRun.addEventListener('click', () => {
+      btnRun.innerHTML = `<i data-lucide="check" class="w-3.5 h-3.5"></i> Executing...`;
+      setTimeout(() => {
+        btnRun.innerHTML = `<i data-lucide="play" class="w-3.5 h-3.5 fill-black"></i> Run Code`;
+      }, 1500);
+    });
+  }
+
   const btnPrev = container.querySelector('#btn-dryrun-prev');
   if (btnPrev) {
     btnPrev.addEventListener('click', () => {
@@ -180,14 +197,14 @@ export function renderDryRunVisualizer(container, practical) {
       renderDryRunVisualizer(container, practical);
     });
   }
-
-  const btnReset = container.querySelector('#btn-dryrun-reset');
-  if (btnReset) {
-    btnReset.addEventListener('click', () => {
-      isPlaying = false;
-      clearInterval(playInterval);
-      currentStepIndex = 0;
-      renderDryRunVisualizer(container, practical);
-    });
-  }
 }
+
+function escapeHtml(str) {
+  return (str || '')
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#039;');
+}
+

@@ -4,11 +4,11 @@ class AppState {
   constructor() {
     this.activePracticalId = 1;
     this.activeTab = 'emulator'; // 'emulator' | 'code' | 'dryrun' | 'vsguide' | 'viva'
-    
+
     // Theme & Layout
     const savedTheme = localStorage.getItem('bca_csharp_theme');
     this.currentTheme = savedTheme && themes[savedTheme] ? savedTheme : 'cyan-dark';
-    
+
     const savedLayout = localStorage.getItem('bca_csharp_layout');
     this.currentLayout = savedLayout || 'classic';
 
@@ -33,6 +33,7 @@ class AppState {
     this.isCheatsheetOpen = false;
     this.isLabRecordOpen = false;
     this.isThemeModalOpen = false;
+    this.isResetConfirmOpen = false;
     this.isSidebarOpenMobile = false;
 
     // Custom API Key for Gemini Live Mode
@@ -127,6 +128,20 @@ class AppState {
 
   setThemeModalOpen(open) {
     this.isThemeModalOpen = open;
+    this.notify();
+  }
+
+  setResetConfirmOpen(open) {
+    this.isResetConfirmOpen = open;
+    this.notify();
+  }
+
+  resetProgress() {
+    this.completedIds = [];
+    this.starredIds = [];
+    localStorage.removeItem('bca_csharp_completed');
+    localStorage.removeItem('bca_csharp_starred');
+    this.isResetConfirmOpen = false;
     this.notify();
   }
 

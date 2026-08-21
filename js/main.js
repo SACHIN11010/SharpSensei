@@ -51,29 +51,29 @@ function renderApp() {
 
   // Classic & Multi-Pane Layouts
   appRoot.innerHTML = `
-    <div class="flex flex-col h-screen w-screen overflow-hidden ${themeConfig.appBg}">
+    <div class="flex flex-col h-screen w-screen overflow-hidden bg-[#0F0F0F] font-['Hanken_Grotesk',sans-serif]">
       <!-- Top Navbar -->
       <div id="navbar-container"></div>
 
-      <!-- Main Workspace -->
-      <div class="flex-1 flex min-h-0 overflow-hidden">
-        <!-- Left Sidebar Navigation -->
-        ${currentLayout === 'zen-focus' ? '' : '<div id="sidebar-container"></div>'}
+      <!-- Main Workspace (Padding & Gap from Google Stitch specs) -->
+      <div class="flex-1 flex pt-[56px] px-4 pb-4 gap-4 overflow-hidden h-screen w-full max-w-[1600px] mx-auto min-h-0">
+        <!-- Left Sidebar Navigation (Google Stitch Pane) -->
+        ${currentLayout === 'zen-focus' ? '' : '<div id="sidebar-container" class="h-full shrink-0"></div>'}
 
-        <!-- Central Stage Area -->
-        <div class="flex-1 flex flex-col min-w-0 overflow-hidden ${themeConfig.appBg}">
+        <!-- Central Stage Area (Elevated Main Studio Card) -->
+        <main class="flex-1 bg-[#0F0F0F] rounded-xl border border-[#3e484f] shadow-lg relative flex flex-col h-full overflow-hidden min-w-0">
           <!-- Telemetry Ribbon -->
           <div id="telemetry-container"></div>
 
           <!-- Main Stage View Tabs & Canvas -->
           <div class="flex-1 flex flex-col min-h-0 overflow-hidden">
-            <!-- Stage Tabs Ribbon -->
-            <div class="h-9 border-b ${themeConfig.borderColor} ${themeConfig.headerBg} flex items-center justify-between px-3 select-none shrink-0">
-              <div class="flex items-center gap-1 overflow-x-auto text-xs">
+            <!-- Horizontal Stage Tabs Ribbon -->
+            <div class="h-10 border-b border-[#3e484f] bg-[#131313]/50 flex items-center justify-between px-4 select-none shrink-0">
+              <div class="flex items-center gap-4 overflow-x-auto text-xs font-['Hanken_Grotesk',sans-serif]">
                 <button
                   data-tab-id="emulator"
-                  class="px-3 py-1 rounded-t-sm font-bold flex items-center gap-1.5 transition-colors cursor-pointer ${
-                    activeTab === 'emulator' ? themeConfig.tabActiveBg : `${themeConfig.textColor} hover:text-white`
+                  class="py-2 font-semibold flex items-center gap-1.5 transition-colors cursor-pointer border-b-2 ${
+                    activeTab === 'emulator' ? 'border-[#00a3d9] text-[#78d1ff]' : 'border-transparent text-[#bdc8d0] hover:text-white'
                   }"
                 >
                   <i data-lucide="play" class="w-3.5 h-3.5"></i>
@@ -82,8 +82,8 @@ function renderApp() {
 
                 <button
                   data-tab-id="code"
-                  class="px-3 py-1 rounded-t-sm font-bold flex items-center gap-1.5 transition-colors cursor-pointer ${
-                    activeTab === 'code' ? themeConfig.tabActiveBg : `${themeConfig.textColor} hover:text-white`
+                  class="py-2 font-semibold flex items-center gap-1.5 transition-colors cursor-pointer border-b-2 ${
+                    activeTab === 'code' ? 'border-[#00a3d9] text-[#78d1ff]' : 'border-transparent text-[#bdc8d0] hover:text-white'
                   }"
                 >
                   <i data-lucide="code-2" class="w-3.5 h-3.5"></i>
@@ -92,8 +92,8 @@ function renderApp() {
 
                 <button
                   data-tab-id="dryrun"
-                  class="px-3 py-1 rounded-t-sm font-bold flex items-center gap-1.5 transition-colors cursor-pointer ${
-                    activeTab === 'dryrun' ? themeConfig.tabActiveBg : `${themeConfig.textColor} hover:text-white`
+                  class="py-2 font-semibold flex items-center gap-1.5 transition-colors cursor-pointer border-b-2 ${
+                    activeTab === 'dryrun' ? 'border-[#00a3d9] text-[#78d1ff]' : 'border-transparent text-[#bdc8d0] hover:text-white'
                   }"
                 >
                   <i data-lucide="cpu" class="w-3.5 h-3.5"></i>
@@ -102,8 +102,8 @@ function renderApp() {
 
                 <button
                   data-tab-id="vsguide"
-                  class="px-3 py-1 rounded-t-sm font-bold flex items-center gap-1.5 transition-colors cursor-pointer ${
-                    activeTab === 'vsguide' ? themeConfig.tabActiveBg : `${themeConfig.textColor} hover:text-white`
+                  class="py-2 font-semibold flex items-center gap-1.5 transition-colors cursor-pointer border-b-2 ${
+                    activeTab === 'vsguide' ? 'border-[#00a3d9] text-[#78d1ff]' : 'border-transparent text-[#bdc8d0] hover:text-white'
                   }"
                 >
                   <i data-lucide="layout-template" class="w-3.5 h-3.5"></i>
@@ -112,8 +112,8 @@ function renderApp() {
 
                 <button
                   data-tab-id="viva"
-                  class="px-3 py-1 rounded-t-sm font-bold flex items-center gap-1.5 transition-colors cursor-pointer ${
-                    activeTab === 'viva' ? themeConfig.tabActiveBg : `${themeConfig.textColor} hover:text-white`
+                  class="py-2 font-semibold flex items-center gap-1.5 transition-colors cursor-pointer border-b-2 ${
+                    activeTab === 'viva' ? 'border-[#00a3d9] text-[#78d1ff]' : 'border-transparent text-[#bdc8d0] hover:text-white'
                   }"
                 >
                   <i data-lucide="graduation-cap" class="w-3.5 h-3.5"></i>
@@ -122,10 +122,10 @@ function renderApp() {
               </div>
             </div>
 
-            <!-- Stage Content Container -->
-            <div id="stage-content-container" class="flex-1 overflow-y-auto p-3 md:p-4"></div>
+            <!-- Stage Content Container (Relative with Grid Pattern) -->
+            <div id="stage-content-container" class="flex-1 overflow-y-auto p-4 relative"></div>
           </div>
-        </div>
+        </main>
       </div>
 
       <!-- AI Tutor Drawer -->
@@ -213,5 +213,10 @@ function refreshIcons() {
   }
 }
 
-// Start application when DOM is ready
-document.addEventListener('DOMContentLoaded', initApp);
+// Start application when DOM is ready or immediately if already loaded
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', initApp);
+} else {
+  initApp();
+}
+

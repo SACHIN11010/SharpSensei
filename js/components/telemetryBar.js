@@ -54,11 +54,10 @@ export function renderTelemetryBar(container) {
         <div class="flex items-center gap-1.5">
           <button
             id="btn-toggle-complete"
-            class="flex items-center gap-1 px-2.5 py-1 rounded-sm text-[10px] font-bold uppercase transition-colors cursor-pointer ${
-              isCompleted 
-                ? 'bg-emerald-500 text-black' 
-                : `${themeConfig.cardSubBg} border ${themeConfig.borderColor} ${themeConfig.textHeading} hover:border-slate-500`
-            }"
+            class="flex items-center gap-1 px-2.5 py-1 rounded-sm text-[10px] font-bold uppercase transition-colors cursor-pointer ${isCompleted
+      ? 'bg-emerald-500 text-black'
+      : `${themeConfig.cardSubBg} border ${themeConfig.borderColor} ${themeConfig.textHeading} hover:border-slate-500`
+    }"
           >
             <i data-lucide="check-circle-2" class="w-3 h-3"></i>
             <span>${isCompleted ? 'COMPLETE' : 'MARK DONE'}</span>
@@ -66,11 +65,10 @@ export function renderTelemetryBar(container) {
 
           <button
             id="btn-toggle-star"
-            class="p-1 rounded-sm border cursor-pointer ${
-              isStarred 
-                ? 'bg-amber-500/20 border-amber-500 text-amber-400' 
-                : `${themeConfig.cardSubBg} ${themeConfig.borderColor} ${themeConfig.textMuted} hover:text-white`
-            }"
+            class="p-1 rounded-sm border cursor-pointer ${isStarred
+      ? 'bg-amber-500/20 border-amber-500 text-amber-400'
+      : `${themeConfig.cardSubBg} ${themeConfig.borderColor} ${themeConfig.textMuted} hover:text-white`
+    }"
             title="Star Practical"
           >
             <i data-lucide="star" class="w-3 h-3 ${isStarred ? 'fill-current' : ''}"></i>
