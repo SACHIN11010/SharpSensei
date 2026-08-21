@@ -3,142 +3,22 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>SharpSensei — 38 C# Practical Studio</title>
+    <meta name="description" content="Clean, interactive 38 C# Practical Studio with Source Code Viewer, Live Run Output Runner, and Step-by-Step Dry Run Debugger for BCA Semester 5." />
 
-    <!-- Primary Meta Tags -->
-    <title>SharpSensei // BCA Sem 5 C# WinForms GUI Lab IDE</title>
-    <meta name="title" content="SharpSensei // BCA Sem 5 C# WinForms GUI Lab IDE" />
-    <meta
-      name="description"
-      content="Comprehensive C# .NET GUI lab simulator, interactive WinForms emulator, dry-run debugger, and AI tutor for BCA Semester 5 students."
-    />
-    <meta name="theme-color" content="#0f172a" />
-
-    <!-- Open Graph / Facebook / WhatsApp -->
-    <meta property="og:type" content="website" />
-    <meta property="og:url" content="https://sharpsensei.local/" />
-    <meta property="og:title" content="SharpSensei // BCA Sem 5 C# WinForms GUI Lab IDE" />
-    <meta
-      property="og:description"
-      content="Comprehensive C# .NET GUI lab simulator, interactive WinForms emulator, dry-run debugger, and AI tutor for BCA Semester 5 students."
-    />
-
-    <!-- Twitter -->
-    <meta property="twitter:card" content="summary_large_image" />
-    <meta property="twitter:title" content="SharpSensei // BCA Sem 5 C# WinForms GUI Lab IDE" />
-    <meta
-      property="twitter:description"
-      content="Comprehensive C# .NET GUI lab simulator, interactive WinForms emulator, dry-run debugger, and AI tutor for BCA Semester 5 students."
-    />
-
-    <!-- Favicon -->
-    <link
-      rel="icon"
-      type="image/svg+xml"
-      href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>⚡</text></svg>"
-    />
+    <!-- Tailwind CSS v4 CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
 
     <!-- Google Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;600;700&family=Hanken+Grotesk:wght@400;600;700&family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;700&display=swap"
-      rel="stylesheet"
-    />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap"
-      rel="stylesheet"
-    />
+    <link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;600;700;800&family=JetBrains+Mono:wght@400;600;700&display=swap" rel="stylesheet" />
 
-    <!-- Tailwind CSS v4 Browser Engine -->
-    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
-
-    <!-- Lucide Icons -->
-    <script src="https://unpkg.com/lucide@latest"></script>
-
-    <!-- Canvas Confetti -->
-    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.4/dist/confetti.browser.min.js"></script>
-
-    <!-- Custom CSS Overrides -->
+    <!-- App Stylesheet -->
     <link rel="stylesheet" href="./css/styles.css" />
   </head>
-  <body class="bg-[#131313] text-[#e5e2e1] font-sans antialiased overflow-hidden h-screen w-screen">
-    <div id="app-root" class="h-full w-full">
-      <!-- Google Stitch Cyberpunk HUD Loading Layout -->
-      <div class="bg-[#131313] text-[#e5e2e1] h-screen w-screen overflow-hidden m-0 p-6 grid grid-cols-3 grid-rows-3 gap-0 box-border border-8 border-[#131313] font-['Hanken_Grotesk',sans-serif]">
-        <!-- Top Left Cell: Logo Chamber -->
-        <div class="border-r border-b border-[#393939] p-6 flex items-start justify-start relative">
-          <div class="absolute top-0 left-0 w-4 h-4 border-t-2 border-l-2 border-[#393939] m-1"></div>
-          <div class="w-32 h-32 flex items-center justify-center bg-[#0e0e0e] border border-[#393939] rounded-lg p-2 shadow-inner">
-            <div class="flex flex-col items-center justify-center text-center">
-              <div class="w-12 h-12 rounded bg-gradient-to-br from-cyan-500 to-emerald-400 flex items-center justify-center text-black font-black text-xl shadow-lg mb-1">
-                C#
-              </div>
-              <span class="font-['JetBrains_Mono',monospace] text-xs font-bold tracking-widest text-[#00ff41]">SHARP</span>
-              <span class="font-['JetBrains_Mono',monospace] text-[10px] text-slate-400 tracking-wider">SENSEI</span>
-            </div>
-          </div>
-        </div>
+  <body class="h-full w-full bg-[#0b0f19] text-[#e5e7eb] font-['Hanken_Grotesk',sans-serif] overflow-hidden">
+    <div id="app-root" class="h-full w-full"></div>
 
-        <!-- Top Middle Cell -->
-        <div class="border-r border-b border-[#393939] relative">
-          <div class="absolute top-2 left-2 font-['JetBrains_Mono',monospace] text-[11px] font-bold tracking-widest text-[#393939]">SEC-01</div>
-        </div>
-
-        <!-- Top Right Cell -->
-        <div class="border-b border-[#393939] relative">
-          <div class="absolute top-2 right-2 font-['JetBrains_Mono',monospace] text-[11px] font-bold tracking-widest text-[#393939]">SYS_INIT</div>
-          <div class="absolute top-0 right-0 w-4 h-4 border-t-2 border-r-2 border-[#393939] m-1"></div>
-        </div>
-
-        <!-- Middle Left Cell -->
-        <div class="border-r border-b border-[#393939] relative">
-          <div class="absolute top-2 left-2 font-['JetBrains_Mono',monospace] text-[11px] font-bold tracking-widest text-[#393939]">SEC-02</div>
-        </div>
-
-        <!-- Middle Center Cell: Tactical Reticle -->
-        <div class="border-r border-b border-[#393939] relative">
-          <div class="absolute inset-0 flex items-center justify-center pointer-events-none opacity-30">
-            <div class="w-full h-[1px] bg-[#393939]"></div>
-            <div class="h-full w-[1px] bg-[#393939] absolute"></div>
-            <div class="w-16 h-16 border border-[#393939] rounded-full absolute"></div>
-          </div>
-        </div>
-
-        <!-- Middle Right Cell -->
-        <div class="border-b border-[#393939]"></div>
-
-        <!-- Bottom Left Cell -->
-        <div class="border-r border-[#393939] relative">
-          <div class="absolute bottom-0 left-0 w-4 h-4 border-b-2 border-l-2 border-[#393939] m-1"></div>
-        </div>
-
-        <!-- Bottom Middle Cell -->
-        <div class="border-r border-[#393939]"></div>
-
-        <!-- Bottom Right Cell: Loading HUD -->
-        <div class="p-6 flex flex-col justify-end items-end relative bg-[#0e0e0e]/30">
-          <div class="absolute bottom-0 right-0 w-6 h-6 border-b-2 border-r-2 border-[#00ff41] m-1"></div>
-          <div class="absolute top-2 left-2 font-['JetBrains_Mono',monospace] text-[11px] font-bold tracking-widest text-[#00ff41] opacity-50">HUD_ACTIVE</div>
-          <div class="w-full max-w-md mb-4 text-right">
-            <h1 class="font-['JetBrains_Mono',monospace] text-base md:text-lg font-bold text-[#e5e2e1] mb-2 animate-pulse-text tracking-wide">
-              Initializing SharpSensei IDE...
-            </h1>
-            <p class="font-['JetBrains_Mono',monospace] text-xs text-[#bdc8d0]">
-              Loading 38 C# WinForms Lab Practicals &amp; AI Engine
-            </p>
-          </div>
-          <div class="w-full max-w-md h-1 bg-[#353535] border border-[#3e484f] relative overflow-hidden">
-            <div class="absolute top-0 left-0 h-full bg-[#00ff41] animate-fill-progress flex">
-              <div class="w-full h-full shimmer-bg animate-shimmer mix-blend-overlay"></div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-
-
-    <!-- Main Unified JavaScript Entry Point (Supports direct file:// opening and http:// servers) -->
+    <!-- Application Script (Universal bundle for file:// and http://) -->
     <script src="./js/bundle.js"></script>
   </body>
 </html>
-
