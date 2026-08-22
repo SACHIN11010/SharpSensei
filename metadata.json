@@ -1,6 +1,6 @@
 {
   "name": "SharpSensei",
-  "description": "SharpSensei: Master C# .NET GUI Programming with 38 interactive WinForms simulations, Dry Run visualizer, step-by-step Visual Studio guide, Viva Voce exam prep, and Gemini-powered AI Tutor.",
+  "description": "SharpSensei: Study 38 interactive BCA C# .NET GUI (WinForms) practicals with a syntax-highlighted source-code viewer, expected run output, and a step-by-step Dry Run visualizer.",
   "requestFramePermissions": [],
-  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+  "majorCapabilities": []
 }

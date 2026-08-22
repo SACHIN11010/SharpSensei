@@ -1,56 +1,75 @@
-# ⚡ SharpSensei // C# WinForms Lab IDE & AI Tutor
+# ⚡ SharpSensei — C# Practical Studio
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
-[![Build Status](https://img.shields.io/badge/Build-Passing-brightgreen.svg)]()
-[![React](https://img.shields.io/badge/React-19.0-blue.svg)](https://react.dev/)
-[![TailwindCSS](https://img.shields.io/badge/Tailwind-v4.0-38bdf8.svg)](https://tailwindcss.com/)
-[![Express](https://img.shields.io/badge/Express-4.21-000000.svg)](https://expressjs.com/)
-[![Gemini AI](https://img.shields.io/badge/AI-Gemini%203.7%20Flash-orange.svg)](https://ai.google.dev/)
+[![Static Site](https://img.shields.io/badge/Static-Vanilla%20JS-f7df1e.svg)]()
+[![No Build Deps](https://img.shields.io/badge/Dependencies-0-brightgreen.svg)]()
 
-SharpSensei is a full-stack interactive educational platform designed for BCA (Bachelor of Computer Applications) Semester 5 students to master **C# .NET GUI Programming** with Windows Forms.
+SharpSensei is a lightweight, offline-friendly study tool for **BCA (Bachelor of Computer
+Applications) Semester 5** students working through the 38 **C# .NET GUI (Windows Forms)**
+lab practicals. It runs entirely in the browser — no backend, no build step, no API keys.
 
 ---
 
 ## ✨ Features
 
-- 🖥️ **38 Interactive WinForms Simulations**: Real-time interactive control emulations (Buttons, ListBoxes, DataGridViews, GDI+ Graphics, Timers).
-- 🔍 **Dry Run Visualizer**: Step-by-step logic execution and memory allocation visualizer.
-- 🎓 **AI Tutor & Viva Voce Exam Prep**: Powered by Google Gemini 3.7/3.1 Flash with built-in offline fallback engine.
-- 🛠️ **Visual Studio Guide**: Step-by-step guidance for control configurations and properties.
-- 🎨 **Multi-Theme Engine**: Sleek dark modes, glassmorphism, and classic Visual Studio themes.
+- 📚 **38-Practical Browser** — every practical organised across 4 modules (C# OOP & Basics,
+  WinForms Controls, Advanced Controls & GDI+, ADO.NET & Database), with instant **search** and
+  **module filtering**.
+- 📄 **Source Code Viewer** — the full `Program.cs` for each practical with line numbers and
+  C# syntax highlighting, plus **Copy Code** and **Print / Export** (styled for BCA lab records).
+- ▶ **Run Output** — the expected console / form output for each practical.
+- ⚡ **Dry Run Visualizer** — a step-by-step execution trace with a variable inspector and an
+  auto-play stepper, to walk through the logic line by line.
 
 ---
 
 ## 🛠️ Tech Stack
 
-- **Frontend**: React 19, TypeScript, Vite 6, Tailwind CSS v4, Motion, Lucide React
-- **Backend**: Express.js, Node.js, `@google/genai`
-- **Build Tools**: Vite, `esbuild`, `tsx`
+- **HTML + vanilla JavaScript** (ES modules, bundled to a single IIFE for `file://` support)
+- **[Tailwind CSS](https://tailwindcss.com/)** via CDN + a small custom stylesheet (`css/styles.css`)
+- **Google Fonts** (Hanken Grotesk, JetBrains Mono)
+- No backend, no framework, and **zero runtime/build dependencies**.
 
 ---
 
-## 🚀 Quick Start (Local Setup)
+## 🚀 Quick Start
 
-### Prerequisites
-- Node.js 20+ or Bun 1.1+
+No installation is required — it's a static site.
 
-### Installation
+**Option A — just open it:**
+
+Double-click `index.html` (it loads the pre-built `js/bundle.js`, which works over `file://`).
+
+**Option B — run a local server** (Node.js 18+):
+
 ```bash
-# 1. Clone the repository
 git clone https://github.com/YOUR_USERNAME/SharpSensei.git
 cd SharpSensei
-
-# 2. Install dependencies
-npm install
-
-# 3. Configure environment variables
-cp .env.example .env
-
-# 4. Start local development server
 npm run dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) in your browser.
+Then open [http://localhost:3000](http://localhost:3000). Set `PORT` to change the port.
+
+---
+
+## 🧱 Project Structure & Build
+
+The app is authored as two ES-module sources and bundled into one browser-ready file:
+
+| File | Role |
+| :--- | :--- |
+| `js/practicalsData.js` | Data — all 38 practicals (source, expected output, dry-run trace). **Source of truth.** |
+| `js/app.js` | UI — rendering, tabs, search/filter, stepper, syntax highlighter. **Source of truth.** |
+| `js/bundle.js` | **Generated** IIFE that `index.html` loads. Do not edit by hand — run `npm run build`. |
+| `css/styles.css` | Custom styles + C# token colors + print rules. |
+| `scripts/build-bundle.mjs` | Concatenates the two sources into `js/bundle.js`. |
+| `scripts/serve.mjs` | Zero-dependency static dev server. |
+
+After editing `js/practicalsData.js` or `js/app.js`, regenerate the bundle and commit both:
+
+```bash
+npm run build
+```
 
 ---
 
@@ -58,11 +77,9 @@ Open [http://localhost:3000](http://localhost:3000) in your browser.
 
 | Script | Description |
 | :--- | :--- |
-| `npm run dev` | Starts Express server with Vite HMR middleware |
-| `npm run build` | Bundles Vite SPA and compiles `server.ts` to `dist/server.cjs` |
-| `npm start` | Runs production Node.js server from `dist/server.cjs` |
-| `npm run lint` | Performs TypeScript static type checking |
-| `npm run clean` | Cleans up build artifacts (`dist/`) cross-platform |
+| `npm run build` | Regenerates `js/bundle.js` from the ES-module sources. |
+| `npm run dev` / `npm start` | Serves the site locally on `http://localhost:3000`. |
+| `npm run lint` | Syntax-checks the JS sources and the generated bundle (`node --check`). |
 
 ---
 

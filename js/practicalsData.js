@@ -902,10 +902,10 @@ public partial class FormShapes : Form
         Graphics g = e.Graphics;
         Pen pen = new Pen(Color.Cyan, 3);
         g.DrawRectangle(pen, 20, 20, 150, 100);
-        g.FillEllipse(Brushes.Emerald, 200, 20, 100, 100);
+        g.FillEllipse(Brushes.MediumSeaGreen, 200, 20, 100, 100);
     }
 }`,
-    expectedOutput: "Form renders a Cyan rectangle and Emerald filled circle via GDI+",
+    expectedOutput: "Form renders a Cyan rectangle and a green filled ellipse via GDI+",
     traceSteps: [
       { line: 11, explanation: "Draw rectangle outline at (20,20) size 150x100.", variables: { x: 20, y: 20 } },
       { line: 12, explanation: "Fill circle ellipse at (200,20).", variables: { width: 100 } }

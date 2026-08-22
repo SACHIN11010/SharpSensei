@@ -1,10 +1,10 @@
-﻿(function () {
+(function () {
   'use strict';
 
 // ==========================================
 // MODULE: js/practicalsData.js
 // ==========================================
-// SharpSensei â€” All 38 BCA C# GUI & ADO.NET Practicals Database
+// SharpSensei — All 38 BCA C# GUI & ADO.NET Practicals Database
 
 const allPracticals = [
   // ==========================================
@@ -329,11 +329,11 @@ namespace SharpSenseiLab
         static void Main(string[] args)
         {
             Employee emp = new Employee { Name = "Rohan" };
-            Console.WriteLine($"Employee {emp.Name} earns â‚¹{emp.Salary}");
+            Console.WriteLine($"Employee {emp.Name} earns ₹{emp.Salary}");
         }
     }
 }`,
-    expectedOutput: "Employee Rohan earns â‚¹50000",
+    expectedOutput: "Employee Rohan earns ₹50000",
     traceSteps: [
       { line: 19, explanation: "Instantiate Employee derived object.", variables: { Name: "\"Rohan\"", Salary: 50000 } },
       { line: 20, explanation: "Access inherited Name property from base class.", variables: { Name: "\"Rohan\"" } }
@@ -489,10 +489,10 @@ public partial class FormBilling : Form
         if (chkCheese.Checked) total += 30;
         if (chkDrink.Checked) total += 50;
 
-        lblTotal.Text = $"Total Bill: â‚¹{total}";
+        lblTotal.Text = $"Total Bill: ₹{total}";
     }
 }`,
-    expectedOutput: "Selected: Large Pizza (â‚¹200) + Extra Cheese (â‚¹30) + Cold Drink (â‚¹50)\nLabel Displays: 'Total Bill: â‚¹280'",
+    expectedOutput: "Selected: Large Pizza (₹200) + Extra Cheese (₹30) + Cold Drink (₹50)\nLabel Displays: 'Total Bill: ₹280'",
     traceSteps: [
       { line: 8, explanation: "Initialize total bill = 0.", variables: { total: 0 } },
       { line: 10, explanation: "Large pizza radio checked (+200).", variables: { total: 200 } },
@@ -908,10 +908,10 @@ public partial class FormShapes : Form
         Graphics g = e.Graphics;
         Pen pen = new Pen(Color.Cyan, 3);
         g.DrawRectangle(pen, 20, 20, 150, 100);
-        g.FillEllipse(Brushes.Emerald, 200, 20, 100, 100);
+        g.FillEllipse(Brushes.MediumSeaGreen, 200, 20, 100, 100);
     }
 }`,
-    expectedOutput: "Form renders a Cyan rectangle and Emerald filled circle via GDI+",
+    expectedOutput: "Form renders a Cyan rectangle and a green filled ellipse via GDI+",
     traceSteps: [
       { line: 11, explanation: "Draw rectangle outline at (20,20) size 150x100.", variables: { x: 20, y: 20 } },
       { line: 12, explanation: "Fill circle ellipse at (200,20).", variables: { width: 100 } }
@@ -1293,7 +1293,7 @@ function renderApp() {
                 currentTab === 'code' ? 'bg-[#06b6d4] text-black shadow' : 'text-[#9ca3af] hover:text-white'
               }"
             >
-              <span>ðŸ“„ SOURCE CODE</span>
+              <span>📄 SOURCE CODE</span>
             </button>
 
             <button
@@ -1302,7 +1302,7 @@ function renderApp() {
                 currentTab === 'run' ? 'bg-[#06b6d4] text-black shadow' : 'text-[#9ca3af] hover:text-white'
               }"
             >
-              <span>â–¶ RUN OUTPUT</span>
+              <span>▶ RUN OUTPUT</span>
             </button>
 
             <button
@@ -1311,7 +1311,7 @@ function renderApp() {
                 currentTab === 'dryrun' ? 'bg-[#06b6d4] text-black shadow' : 'text-[#9ca3af] hover:text-white'
               }"
             >
-              <span>âš¡ DRY RUN</span>
+              <span>⚡ DRY RUN</span>
             </button>
           </div>
         </header>
@@ -1381,7 +1381,7 @@ function renderTabContent(practical) {
           </div>
 
           <div class="p-3 bg-[#0b0f19] border border-[#1f2937] rounded text-[#9ca3af] text-xs leading-relaxed">
-            ðŸ’¡ <strong>Runtime Execution Note</strong>: Practical #${practical.id} compiled and executed successfully. Form components and delegates initialized.
+            💡 <strong>Runtime Execution Note</strong>: Practical #${practical.id} compiled and executed successfully. Form components and delegates initialized.
           </div>
         </div>
       </div>
@@ -1402,19 +1402,19 @@ function renderTabContent(practical) {
           <!-- Stepper Header Controls -->
           <div class="flex items-center justify-between border-b border-[#1f2937] pb-3 flex-wrap gap-2">
             <div class="flex items-center gap-2">
-              <span class="text-[#f59e0b] font-bold">âš¡ DRY RUN DEBUGGER</span>
+              <span class="text-[#f59e0b] font-bold">⚡ DRY RUN DEBUGGER</span>
               <span class="text-[#9ca3af] text-[11px]">(Step ${currentStepIndex + 1}/${steps.length})</span>
             </div>
 
             <div class="flex items-center gap-2">
               <button id="btn-step-prev" ${currentStepIndex === 0 ? 'disabled' : ''} class="px-3 py-1.5 rounded border border-[#1f2937] text-white hover:bg-[#1f2937] disabled:opacity-30 cursor-pointer font-bold">
-                â—„ Prev Step
+                ◄ Prev Step
               </button>
               <button id="btn-step-play" class="px-3 py-1.5 rounded border border-[#06b6d4] text-[#06b6d4] hover:bg-[#06b6d4]/10 cursor-pointer font-bold">
-                ${isAutoPlaying ? 'â¸ Pause' : 'â–¶ Auto Step'}
+                ${isAutoPlaying ? '⏸ Pause' : '▶ Auto Step'}
               </button>
               <button id="btn-step-next" ${currentStepIndex === steps.length - 1 ? 'disabled' : ''} class="px-3 py-1.5 rounded border border-[#1f2937] text-white hover:bg-[#1f2937] disabled:opacity-30 cursor-pointer font-bold">
-                Next Step â–º
+                Next Step ►
               </button>
             </div>
           </div>
@@ -1596,4 +1596,3 @@ document.addEventListener('DOMContentLoaded', init);
 
 
 })();
-

@@ -7,7 +7,7 @@ on:
     branches: [ main ]
 
 jobs:
-  build-and-lint:
+  build-and-verify:
     runs-on: ubuntu-latest
 
     steps:
@@ -18,13 +18,16 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: 20
-          cache: 'npm'
 
-      - name: Install Dependencies
-        run: npm ci
-
-      - name: Type Check (Lint)
+      # The project is a zero-dependency static site, so there is nothing to
+      # install. `lint` syntax-checks the JS sources and the generated bundle.
+      - name: Lint (syntax check)
         run: npm run lint
 
-      - name: Build Production Bundle
+      - name: Build bundle
         run: npm run build
+
+      # Guard: the committed js/bundle.js must match a fresh build from the
+      # sources. This is what prevents the bundle from silently drifting.
+      - name: Verify bundle is in sync with sources
+        run: git diff --exit-code js/bundle.js
